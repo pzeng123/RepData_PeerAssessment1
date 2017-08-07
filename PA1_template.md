@@ -23,16 +23,7 @@ head(table)
 ## 5    NA 2012-10-01       20
 ## 6    NA 2012-10-01       25
 ```
-output:
-```
-##   steps       date interval
-## 1    NA 2012-10-01        0
-## 2    NA 2012-10-01        5
-## 3    NA 2012-10-01       10
-## 4    NA 2012-10-01       15
-## 5    NA 2012-10-01       20
-## 6    NA 2012-10-01       25
-```
+
 
 Preprocess the data
 
@@ -47,28 +38,13 @@ str(steps_date)
 ##  $ date : Date, format: "2012-10-02" "2012-10-03" ...
 ##  $ steps: num  126 11352 12116 13294 15420 ...
 ```
-output:
-```
-## 'data.frame':	53 obs. of  2 variables:
-##  $ date : Date, format: "2012-10-02" "2012-10-03" "2012-10-04" "2012-10-05" ...
-##  $ steps: num  126 11352 12116 13294 15420 ...
-```
+
 
 
 ```r
 head(steps_date)
 ```
 
-```
-##         date steps
-## 1 2012-10-02   126
-## 2 2012-10-03 11352
-## 3 2012-10-04 12116
-## 4 2012-10-05 13294
-## 5 2012-10-06 15420
-## 6 2012-10-07 11015
-```
-output:
 ```
 ##         date steps
 ## 1 2012-10-02   126
@@ -102,10 +78,6 @@ steps_mean
 ## [1] 10766.19
 ```
 
-```
-## [1] 10766.19
-```
-
 
 
 ```r
@@ -117,9 +89,6 @@ steps_median
 ## [1] 10765
 ```
 
-```
-## [1] 10765
-```
 
 ## What is the average daily activity pattern?
 
@@ -147,9 +116,6 @@ steps_per_day$interval[which.max(steps_per_day$steps)]
 ## [1] 835
 ```
 
-```
-## [1] 835
-```
 
 
 ## Imputing missing values
@@ -166,9 +132,6 @@ sum(is.na(table))
 ## [1] 2304
 ```
 
-```
-## [1] 2304
-```
 
 
 ```r
@@ -201,17 +164,9 @@ mean(steps_date$steps)
 ## [1] 10766.19
 ```
 
-```
-## [1] 10766.19
-```
-
 
 ```r
 median(steps_date$steps)
-```
-
-```
-## [1] 10766.19
 ```
 
 ```
@@ -239,15 +194,6 @@ head(table)
 ## 6        0 0.000000 2012-11-15      weekday
 ```
 
-```
-##   interval    steps       date weekdayorend 
-## 1        0 1.716981 2012-10-01   weekday      
-## 2        0 0.000000 2012-11-23   weekday      
-## 3        0 0.000000 2012-10-28   weekend      
-## 4        0 0.000000 2012-11-06   weekday      
-## 5        0 0.000000 2012-11-24   weekend      
-## 6        0 0.000000 2012-11-15   weekday      
-```
 
 Plot weekend and weekday figures to see the differences:
 

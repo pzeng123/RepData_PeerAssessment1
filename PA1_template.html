@@ -224,17 +224,6 @@ head(table)
 ## 6    NA 2012-10-01       25
 </code></pre>
 
-<p>output:</p>
-
-<pre><code>##   steps       date interval
-## 1    NA 2012-10-01        0
-## 2    NA 2012-10-01        5
-## 3    NA 2012-10-01       10
-## 4    NA 2012-10-01       15
-## 5    NA 2012-10-01       20
-## 6    NA 2012-10-01       25
-</code></pre>
-
 <p>Preprocess the data</p>
 
 <pre><code class="r">steps_date &lt;- aggregate(steps ~ date, data = table, FUN = sum)
@@ -246,26 +235,8 @@ str(steps_date)
 ##  $ steps: num  126 11352 12116 13294 15420 ...
 </code></pre>
 
-<p>output:</p>
-
-<pre><code>## &#39;data.frame&#39;:    53 obs. of  2 variables:
-##  $ date : Date, format: &quot;2012-10-02&quot; &quot;2012-10-03&quot; &quot;2012-10-04&quot; &quot;2012-10-05&quot; ...
-##  $ steps: num  126 11352 12116 13294 15420 ...
-</code></pre>
-
 <pre><code class="r">head(steps_date)
 </code></pre>
-
-<pre><code>##         date steps
-## 1 2012-10-02   126
-## 2 2012-10-03 11352
-## 3 2012-10-04 12116
-## 4 2012-10-05 13294
-## 5 2012-10-06 15420
-## 6 2012-10-07 11015
-</code></pre>
-
-<p>output:</p>
 
 <pre><code>##         date steps
 ## 1 2012-10-02   126
@@ -294,14 +265,8 @@ steps_mean
 <pre><code>## [1] 10766.19
 </code></pre>
 
-<pre><code>## [1] 10766.19
-</code></pre>
-
 <pre><code class="r">steps_median &lt;- median(steps_date$steps)
 steps_median
-</code></pre>
-
-<pre><code>## [1] 10765
 </code></pre>
 
 <pre><code>## [1] 10765
@@ -325,17 +290,11 @@ plot(steps_per_day, type = &quot;l&quot;, xlab = &quot;Interval&quot;, ylab = &q
 <pre><code>## [1] 835
 </code></pre>
 
-<pre><code>## [1] 835
-</code></pre>
-
 <h2>Imputing missing values</h2>
 
 <p>How many missing values in the dataset:</p>
 
 <pre><code class="r">sum(is.na(table))
-</code></pre>
-
-<pre><code>## [1] 2304
 </code></pre>
 
 <pre><code>## [1] 2304
@@ -361,13 +320,7 @@ barplot(steps_date$steps, names.arg = steps_date$date, xlab = &quot;Date&quot;, 
 <pre><code>## [1] 10766.19
 </code></pre>
 
-<pre><code>## [1] 10766.19
-</code></pre>
-
 <pre><code class="r">median(steps_date$steps)
-</code></pre>
-
-<pre><code>## [1] 10766.19
 </code></pre>
 
 <pre><code>## [1] 10766.19
@@ -388,15 +341,6 @@ head(table)
 ## 4        0 0.000000 2012-11-06      weekday
 ## 5        0 0.000000 2012-11-24      weekend
 ## 6        0 0.000000 2012-11-15      weekday
-</code></pre>
-
-<pre><code>##   interval    steps       date weekdayorend 
-## 1        0 1.716981 2012-10-01   weekday      
-## 2        0 0.000000 2012-11-23   weekday      
-## 3        0 0.000000 2012-10-28   weekend      
-## 4        0 0.000000 2012-11-06   weekday      
-## 5        0 0.000000 2012-11-24   weekend      
-## 6        0 0.000000 2012-11-15   weekday      
 </code></pre>
 
 <p>Plot weekend and weekday figures to see the differences:</p>
