@@ -2,9 +2,9 @@
 
 ## Loading and preprocessing the data
 
-First we unzip the activity.zip in this repository, then open and load the csv file, preprocess the data.
+First we unzip the activity.zip in this repository, then open and load the csv file
 
-```r
+``` {r echo=TRUE}
 unzip(zipfile = "activity.zip", overwrite = TRUE)
 table <- read.csv("./activity.csv")
 table$date <- as.Date(table$date)
@@ -23,8 +23,9 @@ output:
 ## 6    NA 2012-10-01       25
 ```
 
-```r
-# preprocess the data
+Preprocess the data
+
+``` {r echo=TRUE}
 steps_date <- aggregate(steps ~ date, data = table, FUN = sum)
 str(steps_date)
 ```
@@ -35,7 +36,7 @@ output:
 ##  $ steps: num  126 11352 12116 13294 15420 ...
 ```
 
-```r
+``` {r echo=TRUE}
 head(steps_date)
 ```
 output:
@@ -53,14 +54,13 @@ output:
 ## What is mean total number of steps taken per day?
 
 Plot a histogram that plot the steps per day.
-```r
+``` {r echo=TRUE}
 barplot(steps_date$steps, names.arg = steps_date$date, xlab = "Date", ylab = "Steps")
 ```
-![plot of chunk Histogramplot](figure/Histogramplot.png)
 
 Mean and median are 10766.19 and 10765:
 
-```r
+``` {r echo=TRUE}
 steps_mean <- mean(steps_date$steps)
 steps_mean
 ```
@@ -70,7 +70,7 @@ steps_mean
 ```
 
 
-```r
+``` {r echo=TRUE}
 steps_median <- median(steps_date$steps)
 steps_median
 ```
@@ -84,18 +84,17 @@ steps_median
 Plot a time series of the 5-minute interval and the average number of steps taken, averaged across all days
 
 
-```r
-steps_data <- aggregate(steps ~ interval, data = table, FUN = mean)
-plot(steps_data, type = "l", xlab = "Interval", ylab = "Steps")
+``` {r echo=TRUE}
+steps_per_day <- aggregate(steps ~ interval, data = table, FUN = mean)
+plot(steps_per_day, type = "l", xlab = "Interval", ylab = "Steps")
 ```
 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6.png) 
 
 Find the maximum number of steps:
 
 
-```r
-steps_data$interval[which.max(steps_data$steps)]
+``` {r echo=TRUE}
+steps_per_day$interval[which.max(steps_per_day$steps)]
 ```
 
 ```
@@ -108,7 +107,7 @@ steps_data$interval[which.max(steps_data$steps)]
 How many missing values in the dataset:
 
 
-```r
+``` {r echo=TRUE}
 sum(is.na(table))
 ```
 
@@ -116,8 +115,8 @@ sum(is.na(table))
 ## [1] 2304
 ```
 
-```r
-table <- merge(table, steps_data, by = "interval", suffixes = c("", ".y"))
+``` {r echo=TRUE}
+table <- merge(table, steps_per_day, by = "interval", suffixes = c("", ".y"))
 na <- is.na(table$steps)
 table$steps[na] <- table$steps.y[na]
 table <- table[, c(1:3)]
@@ -128,14 +127,13 @@ table <- table[, c(1:3)]
 compare to the previous figure, the median has changed a little and is now exactly equal to the mean
  
  
-```r
+``` {r echo=TRUE}
 steps_date <- aggregate(steps ~ date, data = table, FUN = sum)
 barplot(steps_date$steps, names.arg = steps_date$date, xlab = "Date", ylab = "Steps")
 ```
 
-![plot of chunk ImputingMissingValue](figure/ImputingMissingValue.png) 
 
-```r
+``` {r echo=TRUE}
 mean(steps_date$steps)
 ```
 
@@ -143,7 +141,7 @@ mean(steps_date$steps)
 ## [1] 10766.19
 ```
 
-```r
+``` {r echo=TRUE}
 median(steps_date$steps)
 ```
 
@@ -156,23 +154,29 @@ median(steps_date$steps)
 
 Find days are either weekdays or weekends.
 
-```r
-table$weekdayorend <- ifelse(weekdays(table$date) == "Saturday" | weekdays(table$date) == "Sunday", "Weekend", "Weekday")
+``` {r echo=TRUE}
+table$weekdayorend <- ifelse(weekdays(table$date) == "Saturday" | weekdays(table$date) == "Sunday", "weekend", "weekday")
 head(table)
 ```
 
 ```
 ##   interval    steps       date weekdayorend 
-## 1        0 1.716981 2012-10-01   Weekday      
-## 2        0 0.000000 2012-11-23   Weekday      
-## 3        0 0.000000 2012-10-28   Weekend      
-## 4        0 0.000000 2012-11-06   Weekday      
-## 5        0 0.000000 2012-11-24   Weekend      
-## 6        0 0.000000 2012-11-15   Weekday      
+## 1        0 1.716981 2012-10-01   weekday      
+## 2        0 0.000000 2012-11-23   weekday      
+## 3        0 0.000000 2012-10-28   weekend      
+## 4        0 0.000000 2012-11-06   weekday      
+## 5        0 0.000000 2012-11-24   weekend      
+## 6        0 0.000000 2012-11-15   weekday      
 ```
 
+Plot weekend and weekday figures to see the differences:
 
+``` {r echo=TRUE}
+par(mfrow = c(2, 1))
+steps_type <- aggregate(steps ~ interval, data = table, subset = table$weekdayorend == "weekend", FUN = mean)
+plot(steps_type, main = "weekend", type = "l", xlab = "Interval", ylab = "Steps")
+steps_type <- aggregate(steps ~ interval, data = table, subset = table$weekdayorend == "weekday", FUN = mean)
+plot(steps_type, main = "weekday", type = "l", xlab = "Interval", ylab = "Steps")
+```
 
-
-
-
+Yes there are differences, for example on weekday it has higher peak.
